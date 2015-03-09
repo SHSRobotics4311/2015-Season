@@ -55,7 +55,7 @@ public class OI {
         joystick1 = new Joystick(0);
         
         joystickButton1 = new JoystickButton(joystick1, 1);
-        joystickButton1.whileHeld(new HalfSpeed());
+        joystickButton1.whileHeld(new SpeedModifier(Speeds.QUARTER_SPEED));
         joystick2 = new Joystick(1);
         joystickButton2 = new JoystickButton(joystick2, 1);
         joystickButton3 = new JoystickButton(joystick1, 2);

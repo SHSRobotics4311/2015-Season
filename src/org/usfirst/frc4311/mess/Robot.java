@@ -101,20 +101,20 @@ public class Robot extends IterativeRobot {
 		RobotMap.lifterRobotDrive21.setSafetyEnabled(true); //? {}
 		
 		if (OI.joystickButton1.get() == true) { //If Joystick 1 is active
-			new HalfSpeed(); //?
+			new SpeedModifier(Speeds.HALF_SPEED); //?
 			RobotMap.lifterRobotDrive21.tankDrive(oi.joystick2.getY()/2,oi.joystick2.getY()/2);
 		} if (OI.joystickButton2.get() == true) { //If Joystick 2 is active
 			RobotMap.grabberSolenoidleft.set(true);
 			RobotMap.grabberSolenoidright.set(true);
-			this.safetySlowDown();
+			new SpeedModifier(Speeds.QUARTER_SPEED);
 		} if (OI.joystickButton3.get() == true) { //If Joystick 3 is active
 			RobotMap.grabberSolenoidleft.set(true);
 			RobotMap.grabberSolenoidright.set(true);
-			this.safetySlowDown();
+			new SpeedModifier(Speeds.QUARTER_SPEED);
 		} if (OI.joystickButton4.get() == true) { //If Joystick 4 is active
 			RobotMap.grabberSolenoidleft.set(false);
 			RobotMap.grabberSolenoidright.set(false);
-			this.safetySlowDown();
+			new SpeedModifier(Speeds.QUARTER_SPEED);
 		}
 
 		Timer.delay(0.005);	// wait 5ms to avoid hogging CPU cycles
