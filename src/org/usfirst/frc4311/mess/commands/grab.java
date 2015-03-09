@@ -8,20 +8,14 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
-
 package org.usfirst.frc4311.mess.commands;
-
 import org.usfirst.frc4311.mess.Robot;
 import org.usfirst.frc4311.mess.RobotMap;
-
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
-public class  grab extends Command {
+public class Grab extends Command {
 
-    public grab() {
+    public Grab() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 

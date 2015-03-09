@@ -9,14 +9,9 @@
 // it from being updated in the future.
 
 package org.usfirst.frc4311.mess.commands;
-
 import org.usfirst.frc4311.mess.RobotMap;
-
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class  AutonomousCommand extends Command {
 
 	int autoLoopCounter;

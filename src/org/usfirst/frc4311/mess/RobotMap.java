@@ -9,8 +9,6 @@
 // it from being updated in the future.
 
 package org.usfirst.frc4311.mess;
-    
-
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Servo;

@@ -8,18 +8,13 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
-
 package org.usfirst.frc4311.mess.commands;
-
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc4311.mess.Robot;
 
-/**
- *
- */
-public class  lift extends Command {
+public class Lift extends Command {
 
-    public lift() {
+    public Lift() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 

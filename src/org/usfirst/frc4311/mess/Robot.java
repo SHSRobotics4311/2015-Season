@@ -9,28 +9,15 @@
 // it from being updated in the future.
 
 package org.usfirst.frc4311.mess;
-
-
-
-import com.ni.vision.NIVision;
-import com.ni.vision.NIVision.DrawMode;
-import com.ni.vision.NIVision.Image;
-import com.ni.vision.NIVision.ShapeMode;
-
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
-
 import org.usfirst.frc4311.mess.commands.*;
 import org.usfirst.frc4311.mess.subsystems.*;
-
-
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -48,10 +35,10 @@ public class Robot extends IterativeRobot {
 	public static Command grab;
 	public static Command lift;
 	//int session;
-    //Image frame;
-    //AxisCamera camera;
+	//Image frame;
+	//AxisCamera camera;
 
- 	/**
+	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
@@ -65,12 +52,9 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		//frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 
-        // open the camera at the IP address assigned. This is the IP address that the camera
-        // can be accessed through the web interface.
-		AxisCamera camera;
-        camera = new AxisCamera("localhost");
-        System.out.println(camera.getMaxFPS());
-        
+		//Instantiate camera
+		this.createCameraFeed();
+
 		// instantiate the command used for the autonomous period
 		autonomousCommand = new AutonomousCommand();
 	}
@@ -114,45 +98,46 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		//NIVision.Rect rect = new NIVision.Rect(10, 10, 100, 100);while (isOperatorControl() && isEnabled())
 		RobotMap.robotdriveRobotDrive41.setSafetyEnabled(true);
-		RobotMap.lifterRobotDrive21.setSafetyEnabled(true);
-		{
-			if (OI.joystickButton2.get()== true){
-				RobotMap.grabberSolenoidleft.set(true);
-				RobotMap.grabberSolenoidright.set(true);
-			}
-			
-			if  (OI.joystickButton3.get()== true){
-				RobotMap.grabberSolenoidleft.set(true);
-				RobotMap.grabberSolenoidright.set(true);
-			}
-			
-			else {
-				RobotMap.grabberSolenoidleft.set(false);
-				RobotMap.grabberSolenoidright.set(false);
-			}
-			if (OI.joystickButton1.get()== true)
-			{ new HalfSpeed(); 
-				 
-					RobotMap.lifterRobotDrive21.tankDrive(oi.joystick2.getY()/2,oi.joystick2.getY()/2);
-				
-				}
-			
-		        
-		   //         camera.getImage(frame);
-		   //         NIVision.imaqDrawShapeOnImage(frame, frame, rect,
-		     //               DrawMode.DRAW_VALUE, ShapeMode.SHAPE_OVAL, 0.0f);
-
-		    //        CameraServer.getInstance().setImage(frame);
-			
-			// Use the joystick2 y axis for lateral movement, joystick1 Y axis for forward movement, and joystick1 x axis for rotation.
-			// This sample does not use field-oriented drive, so the gyro input is set to zero.
-			
-			else{
-				RobotMap.robotdriveRobotDrive41.mecanumDrive_Cartesian(oi.joystick2.getX()/-2, oi.joystick1.getX()/2, oi.joystick1.getY()/2, 0);
-				RobotMap.lifterRobotDrive21.tankDrive(oi.joystick2.getY()/2,oi.joystick2.getY()/2);
-				}
-		Timer.delay(0.005);	// wait 5ms to avoid hogging CPU cycles
+		RobotMap.lifterRobotDrive21.setSafetyEnabled(true); //? {}
+		
+		if (OI.joystickButton1.get() == true) { //If Joystick 1 is active
+			new HalfSpeed(); //?
+			RobotMap.lifterRobotDrive21.tankDrive(oi.joystick2.getY()/2,oi.joystick2.getY()/2);
+		} if (OI.joystickButton2.get() == true) { //If Joystick 2 is active
+			RobotMap.grabberSolenoidleft.set(true);
+			RobotMap.grabberSolenoidright.set(true);
+			this.safetySlowDown();
+		} if (OI.joystickButton3.get() == true) { //If Joystick 3 is active
+			RobotMap.grabberSolenoidleft.set(true);
+			RobotMap.grabberSolenoidright.set(true);
+			this.safetySlowDown();
+		} if (OI.joystickButton4.get() == true) { //If Joystick 4 is active
+			RobotMap.grabberSolenoidleft.set(false);
+			RobotMap.grabberSolenoidright.set(false);
+			this.safetySlowDown();
 		}
+
+		Timer.delay(0.005);	// wait 5ms to avoid hogging CPU cycles
+
+	}
+
+	private void createCameraFeed() {
+		// open the camera at the IP address assigned. This is the IP address that the camera
+		// can be accessed through the web interface.
+		AxisCamera camera = new AxisCamera("axis-camera.local");
+		System.out.println("Camera Max FPS: " + camera.getMaxFPS());
+
+		//		      camera.getImage(frame);
+		//		         NIVision.imaqDrawShapeOnImage(frame, frame, rect,
+		//		               DrawMode.DRAW_VALUE, ShapeMode.SHAPE_OVAL, 0.0f);
+		//		        CameraServer.getInstance().setImage(frame);
+		// Use the joystick2 y axis for lateral movement, joystick1 Y axis for forward movement, and joystick1 x axis for rotation.
+		// This sample does not use field-oriented drive, so the gyro input is set to zero.
+	}
+
+	private void safetySlowDown() {
+		RobotMap.robotdriveRobotDrive41.mecanumDrive_Cartesian(oi.joystick2.getX()/-2, oi.joystick1.getX()/2, oi.joystick1.getY()/2, 0);
+		RobotMap.lifterRobotDrive21.tankDrive(oi.joystick2.getY()/2,oi.joystick2.getY()/2);
 	}
 	
 	/**

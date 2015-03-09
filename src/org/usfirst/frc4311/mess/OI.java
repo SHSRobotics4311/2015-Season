@@ -8,14 +8,11 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
-
 package org.usfirst.frc4311.mess;
-
 import org.usfirst.frc4311.mess.commands.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.buttons.*;
-
 
 /**
  * This class is the glue that binds the controls on the physical operator
