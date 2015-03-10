@@ -12,58 +12,57 @@ package org.usfirst.frc4311.mess.commands;
 import org.usfirst.frc4311.mess.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class  AutonomousCommand extends Command {
-
+/**
+ * This class is responsible for handling the default autonomous command 
+ * sent from the FRC Pit
+ */
+public class AutonomousCommand extends Command {
 	int autoLoopCounter;
+	
 	public AutonomousCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 	}
 
-	// Called just before this Command runs the first time
+	/** Called just before this Command runs the first time */
 	protected void initialize() {
 		autoLoopCounter = 0;
-		
 	}
 
-	// Called repeatedly when this Command is scheduled to run
+	/** Called repeatedly when the command is scheduled to run */
 	protected void execute() {
-		if(autoLoopCounter >= 0 && autoLoopCounter < 250) //Check if we've completed 100 loops (approximately 2 seconds)
-		{
+		if(autoLoopCounter >= 0 && autoLoopCounter < 250) { //Check if we've completed 100 loops (approximately 2 seconds)
 			RobotMap.robotdriveRobotDrive41.drive(-0.5, 0.0); 	// drive forwards half speed
 			autoLoopCounter++;
+		} else{
+			RobotMap.robotdriveRobotDrive41.drive(0.0, 0.0); 	// stop robot
 		}
+		
 		//else if(autoLoopCounter  >= 15 && autoLoopCounter < 115){
-				//RobotMap.robotdriveRobotDrive41.drive(-0.5, 1.0); 	
-			//	autoLoopCounter++;	
-		
+		//RobotMap.robotdriveRobotDrive41.drive(-0.5, 1.0); 	
+		//	autoLoopCounter++;	
+
 		//else if(autoLoopCounter >= 115 && autoLoopCounter < 215){
-			//		RobotMap.robotdriveRobotDrive41.drive(-0.5, 0.0); 	
-				//	autoLoopCounter++;	
-//		} 
-			else{
-				RobotMap.robotdriveRobotDrive41.drive(0.0, 0.0); 	// stop robot
-				}
-				}
-				
-			
-		
-		
-	
+		//		RobotMap.robotdriveRobotDrive41.drive(-0.5, 0.0); 	
+		//	autoLoopCounter++;	
+		//		} 
+	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		return false;
 	}
 
-	// Called once after isFinished returns true
+	/** Called once (after) isFinished returns true */
 	protected void end() {
-	
+
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
+	/**
+	 * Called when another command which requires one or more 
+	 * of the same subsystems is scheduled to run
+	 */
 	protected void interrupted() {
-		
+
 	}
 }

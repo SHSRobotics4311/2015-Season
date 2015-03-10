@@ -9,27 +9,29 @@
 // it from being updated in the future.
 
 package org.usfirst.frc4311.mess.commands;
+import org.usfirst.frc4311.mess.OI;
+import org.usfirst.frc4311.mess.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class  SpeedModifier extends Command {
 	public Speeds speed;
-	
+
 	public SpeedModifier(Speeds speed) {
 		this.speed = speed;
 	}
 
 	@Override
 	protected void initialize() {
-		switch (speed) {
-		case QUARTER_SPEED: System.out.println("Quarter Speed"); break;
-		case HALF_SPEED: System.out.println("Half Speed"); break;
-		case SPRINT: System.out.println("Don't"); break;
-		}
+		
 	}
 
 	@Override
 	protected void execute() {
-		// TODO Auto-generated method stub
+		switch (speed) {
+		case QUARTER_SPEED: System.out.println("Quarter Speed"); this.setRobotSpeed(3); break;
+		case HALF_SPEED: System.out.println("Half Speed"); this.setRobotSpeed(2); break;
+		case SPRINT: System.out.println("Don't"); this.setRobotSpeed(1); break;
+		}
 	}
 
 	@Override
@@ -46,5 +48,20 @@ public class  SpeedModifier extends Command {
 	@Override
 	protected void interrupted() {
 		// TODO Auto-generated method stub	
+	}
+
+	/**
+	 * Change speed of robot to passed integer
+	 * @param speed Speed passed to change the robot to (only 1, 2, 3)
+	 */
+	private void setRobotSpeed(int speed) {
+		OI oi = new OI(); //Operator Interface
+		double xVal = oi.joystick2.getX() / speed;
+		double yVal = oi.joystick1.getY() / speed;
+
+		RobotMap.robotdriveRobotDrive41.mecanumDrive_Cartesian((xVal * -1), yVal, oi.joystick1.getY() / speed, 0);
+		RobotMap.lifterRobotDrive21.tankDrive(yVal, yVal);
+		//RobotMap.robotdriveRobotDrive41.mecanumDrive_Cartesian(oi.joystick2.getX()/-2, oi.joystick1.getX()/2, oi.joystick1.getY()/2, 0);
+		//RobotMap.lifterRobotDrive21.tankDrive(oi.joystick2.getY()/2,oi.joystick2.getY()/2);
 	}
 }
